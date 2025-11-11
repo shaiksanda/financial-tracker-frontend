@@ -1,15 +1,33 @@
-import { useState } from "react"
-import { Link } from "react-router-dom";
-import { SignupButton } from "../../styles"
+import { useState, useEffect } from "react"
+import Cookies from "js-cookie";
+import { toast } from 'react-toastify';
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { stagedTimers } from "../../fetchData";
+import { useSignupUserMutation } from "../../services/api"
+import PacmanLoader from "react-spinners/PacmanLoader";
 import 'remixicon/fonts/remixicon.css';
 import "./index.css"
 
-const Singup = () => {
+const Signup = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [email,setEmail]=useState("")
+  const [email, setEmail] = useState("")
   const [showPassword, setShowPassword] = useState(false)
-  const handleEmail=(e)=>{
+  const location=useLocation()
+  const navigate = useNavigate()
+  const [signupUser, { isLoading,isFetching }] = useSignupUserMutation();
+
+  useEffect(() => {
+    if (isLoading || isFetching) stagedTimers.start();
+    else stagedTimers.stop();
+
+    return () => {
+      stagedTimers.stop();
+    }
+  }, [isLoading, isFetching, location.pathname]);
+
+  
+  const handleEmail = (e) => {
     setEmail(e.target.value)
   }
   const handleUsername = (e) => {
@@ -21,11 +39,44 @@ const Singup = () => {
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
   }
-  const handleSubmit = () => { }
+
+  const onSubmitSuccess = (data) => {
+    setUsername("")
+    setEmail("")
+    setPassword("")
+    Cookies.set("jwt_token", data.token,{expires:5})
+    localStorage.setItem("user", JSON.stringify({
+      username: data?.user?.username,
+      role: data?.user?.role,
+      avatar: data?.user?.avatar
+    }));
+    toast.success("User Registered Successfully!")
+    navigate("/expenses")
+  }
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault()
+      if (!username || !email || !password) {
+        toast.error("Please fill in all fields.");
+        return;
+      }
+
+      if (password.length < 6) {
+        toast.error("Password must be Atleast 6 Characters Long");
+        return;
+      }
+      const res = await signupUser({ username, email, password }).unwrap()
+      onSubmitSuccess(res)
+    }
+    catch (error) {
+      toast.error(error?.data?.message);
+    }
+  }
+  const isValid = email && username && password
   return (
     <div className="grid-container">
       <div className="img-container">
-        <img src="https://res.cloudinary.com/dq4yjeejc/image/upload/v1732344145/WhatsApp_Image_2024-11-23_at_12.09.56_PM_bd450l.jpg" alt="" />
+        <img src="https://res.cloudinary.com/dq4yjeejc/image/upload/v1762740292/Screenshot_2025-11-10_073427_xkrq7n.png" alt="" />
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -73,13 +124,18 @@ const Singup = () => {
           {showPassword ? (<i onClick={handleShowPassword} className="ri-eye-line eye"></i>) : (<i onClick={handleShowPassword} className="ri-eye-off-line eye"></i>)}
         </div>
         <div style={{ textAlign: "center" }}>
-          <SignupButton style={{width:"100%"}}>Singup</SignupButton>
+          <button className="button signup-button" type='submit' disabled={isLoading || !isValid} style={{ width: "100%" }}>
+            {isLoading ? (<span color="black" style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}>
+              Processing...
+              <PacmanLoader color="black" size={10} />
+            </span>) : ("Signup")}
+          </button>
         </div>
-        <Link to="/login" className="link">Already Signup? Login</Link>
+        <Link to="/login" className="link" style={{ color: 'orange' }}>Already Signup? Login</Link>
       </form>
 
     </div>
   )
 }
 
-export default Singup
+export default Signup

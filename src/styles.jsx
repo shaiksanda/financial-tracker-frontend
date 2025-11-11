@@ -41,33 +41,18 @@ cursor:pointer;
 font-size: 16px;
 font-weight:600;
 outline:none;
-`
 
-export const LoginButton = styled(Button)`
-    background:linear-gradient(to right,skyblue,dodgerblue);
-    color:white;
-    width:100px;
-
-    &:hover{
-    background:linear-gradient(to right,dodgerblue,skyblue);
-    }
-`
-
-export const SignupButton=styled(Button)`
-width:100px;
-color:white;
-
-background: linear-gradient(90deg, #FF512F, #F09819);
-
-
-&:hover{
-background: linear-gradient(90deg, #F09819,#FF512F);
-}
+&:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    backgroud:pink;
+  }
 
 
 `
 
-export const Main=styled.main`
+
+export const Main = styled.main`
     display: flex;
     justify-content:center;
     flex-direction:column;

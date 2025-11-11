@@ -1,6 +1,6 @@
 import Header from "../Header"
 import { Link } from "react-router-dom"
-import { Main,LoginButton,SignupButton } from "../../styles"
+
 import "./index.css"
 
 const Home = () => {
@@ -22,7 +22,7 @@ const Home = () => {
           <h1>What are you waiting for? Try our free platform and manage your finances effortlessly.</h1>
         </div>
         <nav className="btns-container">
-          <Link to="/login"><LoginButton>Login</LoginButton></Link>
+          <Link to="/login"><button className="button login-button">Login</button></Link>
         </nav>
       </Main>
     </div>

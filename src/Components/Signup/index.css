@@ -1,0 +1,35 @@
+.button {
+  height: 40px;
+  border-radius: 8px;
+  border-width: 0px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+}
+
+.signup-button {
+  width: 100px;
+  color: white;
+  background: linear-gradient(90deg, #FF512F, #F09819);
+}
+
+.login-button {
+  color: black;
+  width: 100px;
+  background: linear-gradient(90deg, skyblue, dodgerblue);
+}
+
+.login-button:disabled {
+  background: lightgrey;
+  cursor: not-allowed;
+  opacity: 0.5;
+  color: black;
+}
+
+.signup-button:disabled {
+  background: lightgrey;
+  cursor: not-allowed;
+  opacity: 0.5;
+  color: black
+}
