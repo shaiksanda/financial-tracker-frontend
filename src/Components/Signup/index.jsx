@@ -41,6 +41,7 @@ const Signup = () => {
   }
 
   const onSubmitSuccess = (data) => {
+    console.log(data)
     setUsername("")
     setEmail("")
     setPassword("")

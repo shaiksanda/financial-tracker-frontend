@@ -7,31 +7,44 @@ img {
     display: block;
 }
 
-.cards{
-    padding: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
+/* .home-top-container{
+    height: 100vh;
+    place-items: center;
 
+} */
 
 h1{
-    font-size: 20px;
-    margin: 4px;
-    padding: 4px;
-    color:magenta;
-    line-height: 1.6;
-}
-.where-money-goes-image{
-    display: block;
+    margin:10px;
+    padding: 6px;
+    font-size: 18px;
+    
+    border-radius: 8px;
+    color:black;
+    background-color: white;
+    box-shadow: 0px 0px 1px black;
+    cursor: pointer;
+    transition:all 0.5s ease;
+    
 }
 
+h1:hover{
+    transform: scale(1.02);
+}
+img{
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+img:hover{
+    transform: scale(1.02);
+}
+
+
 @media screen and (min-width:768px) {
+    
+   
+
     h1{
-        font-size: 26px;
-    }
-    .where-money-goes-image{
-        display: none;
+        font-size: 24px;
     }
 }

@@ -37,11 +37,12 @@ const Login = () => {
   }
 
   const onSubmitSuccess = (data) => {
+    console.log(data)
     Cookies.set('jwt_token', data.token, { expires: 5 });
     localStorage.setItem("user", JSON.stringify({
-      username: data?.user?.username,
-      role: data?.user?.role,
-      avatar: data?.user?.avatar
+      username: data?.existingUser?.username,
+      role: data?.existingUser?.role,
+      avatar: data?.existingUser?.avatar
     }));
     toast.success("Login Successfully!")
     navigate("/expenses")

@@ -2,6 +2,7 @@ import "./index.css"
 
 const Expenses = () => {
     const user=JSON.parse(localStorage.getItem("user"))
+    console.log(user)
   return (
     <div>
       <h1>Expesnes Page</h1>
