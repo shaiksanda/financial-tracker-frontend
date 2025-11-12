@@ -40,11 +40,11 @@ const Login = () => {
     console.log(data)
     Cookies.set('jwt_token', data.token, { expires: 5 });
     localStorage.setItem("user", JSON.stringify({
-      username: data?.existingUser?.username,
-      role: data?.existingUser?.role,
-      avatar: data?.existingUser?.avatar
+      username: data?.userDetails?.username,
+      role: data?.userDetails?.role,
+      avatar: data?.userDetails?.avatar
     }));
-    toast.success("Login Successfully!")
+    toast.success(data.message)
     navigate("/expenses")
   }
 

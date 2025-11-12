@@ -47,11 +47,11 @@ const Signup = () => {
     setPassword("")
     Cookies.set("jwt_token", data.token,{expires:5})
     localStorage.setItem("user", JSON.stringify({
-      username: data?.user?.username,
-      role: data?.user?.role,
-      avatar: data?.user?.avatar
+      username: data?.userDetails?.username,
+      role: data?.userDetails?.role,
+      avatar: data?.userDetails?.avatar
     }));
-    toast.success("User Registered Successfully!")
+    toast.success(data.message)
     navigate("/expenses")
   }
   const handleSubmit = async (e) => {
