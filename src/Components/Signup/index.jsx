@@ -13,9 +13,9 @@ const Signup = () => {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const [showPassword, setShowPassword] = useState(false)
-  const location=useLocation()
+  const location = useLocation()
   const navigate = useNavigate()
-  const [signupUser, { isLoading,isFetching }] = useSignupUserMutation();
+  const [signupUser, { isLoading, isFetching }] = useSignupUserMutation();
 
   useEffect(() => {
     if (isLoading || isFetching) stagedTimers.start();
@@ -26,7 +26,7 @@ const Signup = () => {
     }
   }, [isLoading, isFetching, location.pathname]);
 
-  
+
   const handleEmail = (e) => {
     setEmail(e.target.value)
   }
@@ -45,7 +45,7 @@ const Signup = () => {
     setUsername("")
     setEmail("")
     setPassword("")
-    Cookies.set("jwt_token", data.token,{expires:5})
+    Cookies.set("jwt_token", data.token, { expires: 5 })
     localStorage.setItem("user", JSON.stringify({
       username: data?.userDetails?.username,
       role: data?.userDetails?.role,
@@ -73,6 +73,13 @@ const Signup = () => {
       toast.error(error?.data?.message);
     }
   }
+
+  const jwtToken = Cookies.get('jwt_token');
+
+  if (jwtToken) {
+    return <Navigate to="/expenses" />;
+  }
+
   const isValid = email && username && password
   return (
     <div className="grid-container">

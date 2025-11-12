@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation,Navigate } from "react-router-dom";
 import 'remixicon/fonts/remixicon.css';
 import { stagedTimers } from "../../fetchData";
 import "./index.css"
@@ -71,6 +71,12 @@ const Login = () => {
       toast.error(error?.data?.message)
     }
 
+  }
+
+  const jwtToken = Cookies.get('jwt_token');
+
+  if (jwtToken) {
+    return <Navigate to="/expenses" />;
   }
 
   const isValid = username && password
