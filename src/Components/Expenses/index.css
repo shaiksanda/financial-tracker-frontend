@@ -1,0 +1,88 @@
+.main{
+    margin-top: 60px;
+    margin-bottom: 60px;
+    scrollbar-width: none;
+}
+
+
+.expense-layout{
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    min-height:85vh;
+    margin-bottom:65px;
+}
+
+.grid-expense-container{
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    grid-gap: 10px;
+}
+
+
+.transactions-container{
+    background-color: white;
+    color:black;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+
+.welcome-heading{
+    font-size: 24px;
+    font-weight: 600;
+    color:dodgerblue;
+    text-align: center;
+    margin:10px 0px;
+}
+
+.recent-transactions{
+    font-size: 20px;
+    text-align: right;
+    color:orange;
+    margin: 10px 0px;
+}
+
+.summary-container{
+    background-color: aliceblue;
+
+    padding: 6px;
+    border-radius: 8px;
+}
+
+
+.each-expense-item:hover{
+    transform: scale(1.03);
+}
+
+.add-btn{
+    height: 50px;
+    border-radius: 8px;
+    border-width: 0px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: greenyellow;
+}
+
+
+datalist{
+    background-color: red;
+}
+@media screen and (min-width:768px){
+    .main{
+        margin-left:220px
+    }
+    .expense-layout{
+        grid-template-columns: 2fr 1fr;
+    }
+    .welcome-heading{
+        font-size: 30px;
+    }
+    .recent-transactions{
+        font-size: 22px;
+    }
+    
+    .grid-expense-container{
+        grid-template-columns: repeat(2,1fr);
+    }
+}

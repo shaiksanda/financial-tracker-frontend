@@ -11,7 +11,7 @@ export const HeaderContainer = styled.header`
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   position: fixed;
   top: 0;
-  z-index: 1000;
+  z-index: 100;
 
 
   @media (min-width: 768px){

@@ -1,0 +1,47 @@
+
+
+.flex-container{
+    display: flex;
+    gap:10px;
+    align-items: center;
+}
+
+.profile-layout{
+    display: grid;
+    grid-template-columns: 1,1fr;
+    grid-gap: 10px;
+    padding: 10px;
+}
+section{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    line-height: 1;
+    gap:8px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+section:hover{
+    background-color: orange;
+    color: white;
+}
+
+.popup{
+    background-color: orange;
+    color:white;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap:10px
+}
+
+
+@media screen and (min-width:768px){
+    .profile-layout{
+        grid-template-columns: repeat(2,1fr);
+    }
+}

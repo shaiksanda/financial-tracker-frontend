@@ -1,0 +1,167 @@
+.history-container {
+    padding: 5px;
+}
+
+.filters-container {
+    margin: 10px 0px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+
+.history-icon {
+    width: 55px;
+    height: 45px;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.history-icon:hover {
+    transform: scale(1.05);
+}
+
+.grid-history-container {
+    display: grid;
+    grid-template-columns: 1 1fr;
+    grid-gap: 10px;
+}
+
+.total-records {
+    text-align: center;
+    margin: 10px 0px;
+    color: dodgerblue;
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    gap:10px
+}
+
+.delete-button {
+    background-color: red;
+    width: 80px;
+    color: white;
+    cursor: pointer;
+}
+
+.update-button {
+    background-color: greenyellow;
+    width: 80px;
+    cursor: pointer;
+}
+
+.btns {
+    display: flex;
+    gap: 10px
+}
+
+.wait-msg {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0px;
+    color: red;
+}
+
+.sort-container {
+    background: black;
+    box-shadow: 0 0px 10px orange;
+    color: orange;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sort-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn {
+    width: 80px;
+    height: 40px;
+    background: orange;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+.btn-container{
+    text-align: center;
+}
+
+.confirm-btn{
+    background-color: red;
+}
+
+.cancel-btn{
+    background-color: greenyellow;
+    color:black
+}
+
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-input {
+    box-shadow:
+        0 0 20px rgba(255, 255, 255, 0.3),
+        0 0 5px rgba(0, 149, 255, 0.4);
+}
+
+.each-expense-item {
+    box-shadow:
+        0 0 18px rgba(255, 255, 255, 0.3),
+        0 0 6px rgba(0, 149, 255, 0.4);
+    color: black;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.highlight{
+    color:#7c3aed
+}
+
+@media screen and (min-width:768px) {
+    .grid-history-container {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+    .history-container{
+        padding: 5px;
+    }
+
+    .history-icon {
+        height: 50px;
+        width: 50px;
+    }
+
+    .filters-container {
+        margin: 15px 0px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .grid-history-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

@@ -10,16 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.5",
     "@reduxjs/toolkit": "^2.10.1",
     "js-cookie": "^3.0.5",
+    "lucide-react": "^0.553.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.5",
     "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5",
+    "reactjs-popup": "^2.0.6",
     "remixicon": "^4.7.0",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.1.19",
+    "sweetalert2": "^11.26.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

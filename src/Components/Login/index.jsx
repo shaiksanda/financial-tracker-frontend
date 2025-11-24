@@ -37,8 +37,7 @@ const Login = () => {
   }
 
   const onSubmitSuccess = (data) => {
-    console.log(data)
-    Cookies.set('jwt_token', data.token, { expires: 5 });
+    Cookies.set('jwt_token', data.token, { expires: 7 });
     localStorage.setItem("user", JSON.stringify({
       username: data?.userDetails?.username,
       role: data?.userDetails?.role,

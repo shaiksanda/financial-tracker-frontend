@@ -1,10 +1,15 @@
 import Header from "../Header"
-import { Link } from "react-router-dom"
+import { Link,Navigate } from "react-router-dom"
 import { Main } from "../../styles"
+import Cookies from "js-cookie"
 
 import "./index.css"
 
 const Home = () => {
+  const token=Cookies.get("jwt_token")
+  if (token){
+    return <Navigate to="/expenses" />
+  }
   return (
     <div>
       <Header />
