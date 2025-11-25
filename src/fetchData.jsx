@@ -4,6 +4,7 @@ let interval;
 
 export const stagedTimers = {
     start: () => {
+        if (interval) return
         let elapsed = 0;
 
         interval = setInterval(() => {
@@ -26,12 +27,13 @@ export const stagedTimers = {
 
             if (elapsed >= 64) {
                 toast.error("Server not responding. Please try again later.");
-                clearInterval(interval);
+                stagedTimers.stop();
             }
         }, 8000);
     },
 
     stop: () => {
+        if (!interval) return
         clearInterval(interval);
         interval = null;
     },

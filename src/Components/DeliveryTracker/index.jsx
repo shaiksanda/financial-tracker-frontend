@@ -1,7 +1,8 @@
 import MainHeader from "../MainHeader"
 import Sidebar from "../Sidebar"
 import Footer from "../Footer"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { stagedTimers } from "../../fetchData";
 import { Funnel, ArrowUpDown, ListRestart, Bike } from "lucide-react";
 import Skeleton from "@mui/material/Skeleton";
 import { toast } from "react-toastify";
@@ -36,9 +37,18 @@ const DeliveryTracker = () => {
   const [sortByDistance, setSortByDistance] = useState("")
   const [distanceOrder, setDistanceOrder] = useState("")
 
-  const { data, isLoading, isFetching,isError,error } = useDeliveryDataQuery({ sortByDistance, distanceOrder, sortByTimeTaken, timeTakenOrder, sortByEarnings, earningsOrder, sortByDate, dateOrder, date, days, status })
-  const [deleteTrip]=useDeleteTripMutation()
-  
+  const { data, isLoading, isFetching, isError, error } = useDeliveryDataQuery({ sortByDistance, distanceOrder, sortByTimeTaken, timeTakenOrder, sortByEarnings, earningsOrder, sortByDate, dateOrder, date, days, status })
+
+  useEffect(() => {
+    if (isLoading || isFetching) stagedTimers.start();
+    else stagedTimers.stop();
+
+    return () => {
+      stagedTimers.stop();
+    }
+  }, [isLoading, isFetching])
+  const [deleteTrip] = useDeleteTripMutation()
+
   const handleDistane = (e) => {
     setSortByDistance(e.target.value)
   }
@@ -87,13 +97,13 @@ const DeliveryTracker = () => {
     close()
   }
 
-  const handleDelete = async(id,close) => { 
-    try{
+  const handleDelete = async (id, close) => {
+    try {
       await deleteTrip(id).unwrap()
       toast.success("Trip Deleted Successfully!")
       close()
     }
-    catch(error){
+    catch (error) {
       toast(error?.data?.message)
     }
   }
@@ -114,8 +124,8 @@ const DeliveryTracker = () => {
   }
   const filteredDeliveryData = data?.filter((item) => item.dropLocation?.toLowerCase().includes(search.toLowerCase()) || item.customerName?.toLowerCase().includes(search.toLowerCase()))
   const noFilteredData = !isLoading && !isFetching && (filteredDeliveryData?.length === 0);
-  
- 
+
+
   return (
     <div>
       <MainHeader />
@@ -251,15 +261,15 @@ const DeliveryTracker = () => {
 
         </div>
         <h2 className="total-records">Total Trips <Bike />: {filteredDeliveryData?.length || 0}</h2>
-        {isError && (
-          <h2 className="wait-msg">{error?.data?.message} Add your first record.</h2>
-        )}
+
 
         {(noFilteredData) && (
           <h2 className="wait-msg">No Trips match your filters. Try adjusting them.</h2>
         )}
         {isFetching && <h2 className="wait-msg">Please wait… loading your data.</h2>}
-        <div className="grid-history-container">
+        {isError ? (
+          <h2 className="wait-msg">{error?.data?.message} Add your first record.</h2>
+        ) : (<div className="grid-history-container">
           {(isLoading || isFetching) ? (skeletons
           ) : filteredDeliveryData?.map((each) => (
             <div className="each-expense-item" key={each._id}>
@@ -292,7 +302,8 @@ const DeliveryTracker = () => {
               </Popup>
             </div>
           ))}
-        </div>
+        </div>)}
+
       </main>
       <Footer />
     </div>

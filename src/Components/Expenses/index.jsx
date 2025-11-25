@@ -7,9 +7,9 @@ import { toast } from "react-toastify";
 import MainHeader from "../MainHeader"
 import Sidebar from "../Sidebar"
 import Footer from "../Footer"
-import { useEffect, useState } from "react"
-import { useAddExpenseMutation, useGetExpensesQuery } from "../../services/api"
-import PacmanLoader from "react-spinners/PacmanLoader";
+import { useEffect} from "react"
+import { stagedTimers } from "../../fetchData";
+import {  useGetExpensesQuery } from "../../services/api"
 import "./index.css"
 
 
@@ -25,15 +25,20 @@ for (let i = 0; i < 2; i++) {
 
 
 const Expenses = () => {
-  
 
-  
+
+
   const { data, isLoading: expenseLoading, isFetching } = useGetExpensesQuery({ limit: 5, sortByDate: 'date', dateOrder: "desc" });
   const { expenses } = data || []
 
   useEffect(() => {
+    if (expenseLoading || isFetching) stagedTimers.start();
+    else stagedTimers.stop();
 
-  }, [])
+    return () => {
+      stagedTimers.stop();
+    }
+  }, [expenseLoading, isFetching])
 
   const user = JSON.parse(localStorage.getItem("user"))
 
@@ -66,13 +71,13 @@ const Expenses = () => {
         <div className="summary-container">
 
           <h2 className="expense-heading">Summary</h2>
-            <h2>This section is still under development and will be available soon.</h2>
+          <h2>This section is still under development and will be available soon.</h2>
           {/* <h2>Quick Cards</h2>
           <h3>Today's Income, Expenses</h3>
           <h3>Delivery Summary</h3> */}
         </div>
       </main>
-     
+
       <Footer />
     </div>
   )

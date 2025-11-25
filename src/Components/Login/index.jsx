@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie";
-import { Link, useNavigate, useLocation,Navigate } from "react-router-dom";
+import { Link, useNavigate,Navigate } from "react-router-dom";
 import 'remixicon/fonts/remixicon.css';
 import { stagedTimers } from "../../fetchData";
 import "./index.css"
@@ -13,7 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
-  const location = useLocation()
+ 
 
   const [loginUser, { isLoading, isFetching }] = useLoginUserMutation()
 
@@ -24,7 +24,7 @@ const Login = () => {
     return () => {
       stagedTimers.stop();
     }
-  }, [isLoading, isFetching, location.pathname])
+  }, [isLoading, isFetching])
 
   const handleUsername = (e) => {
     setUsername(e.target.value)

@@ -1,8 +1,8 @@
 import PacmanLoader from "react-spinners/PacmanLoader";
 import { toast } from "react-toastify";
-
+import { stagedTimers } from "../../fetchData";
 import { CirclePlus } from "lucide-react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useAddDeliveryRecordMutation } from "../../services/api";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
@@ -15,8 +15,15 @@ const AddDeliveryForm = () => {
             [e.target.name]: e.target.value
         });
     };
+    const [addDeliveryRecord, { isLoading,isFetching }] = useAddDeliveryRecordMutation()
+    useEffect(() => {
+        if (isLoading || isFetching) stagedTimers.start();
+        else stagedTimers.stop();
 
-    const [addDeliveryRecord, { isLoading }] = useAddDeliveryRecordMutation()
+        return () => {
+            stagedTimers.stop();
+        }
+    }, [isLoading, isFetching])
     const handleForm = async (e, close) => {
         e.preventDefault()
 
