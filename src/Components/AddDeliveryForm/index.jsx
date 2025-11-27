@@ -1,4 +1,5 @@
 import PacmanLoader from "react-spinners/PacmanLoader";
+import { useMediaQuery } from "react-responsive";
 import { toast } from "react-toastify";
 import { stagedTimers } from "../../fetchData";
 import { CirclePlus } from "lucide-react";
@@ -42,6 +43,7 @@ const AddDeliveryForm = () => {
     const isValid = Object.values(requiredFields).every(
         (value) => value.trim() !== ""
     );
+     const isMobile = useMediaQuery({ maxWidth: 640 }); // mobile
     return (
         <div>
             <Popup
@@ -51,7 +53,7 @@ const AddDeliveryForm = () => {
                     borderRadius: '12px',
                     width: '90%',
                     maxWidth: '400px',
-                }} modal trigger={<button className="expense-button nav-item"><CirclePlus />Add Delivery</button>}>
+                }} modal trigger={<button className={`expense-button ${isMobile ? "footer-item" : "nav-item"}`}><CirclePlus />{isMobile ? "Add":"Add Delivery"}</button>}>
                 {(close) => (
                     <form onSubmit={(e) => handleForm(e, close)}>
                         <h2 className="expense-heading">Add Delivery Record</h2>

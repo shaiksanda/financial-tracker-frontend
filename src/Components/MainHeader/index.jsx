@@ -14,7 +14,7 @@ const MainHeader = () => {
   return (
     <>
     <HeaderContainer>
-      <Link to="/expenses"><LogoImg src="https://res.cloudinary.com/dq4yjeejc/image/upload/v1762663256/image_adgp0r.webp" alt="" /></Link>
+      <Link to="/home"><LogoImg src="https://res.cloudinary.com/dq4yjeejc/image/upload/v1762663256/image_adgp0r.webp" alt="" /></Link>
       <Link to="/profile"><LogoImg src={avatar} alt="avatar" /></Link>
       <Menu onClick={() => setOpenMenu(true)} className="menu-item" />
     </HeaderContainer>

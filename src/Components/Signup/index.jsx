@@ -51,7 +51,7 @@ const Signup = () => {
       avatar: data?.userDetails?.avatar
     }));
     toast.success(data.message)
-    navigate("/expenses")
+    navigate("/home")
   }
   const handleSubmit = async (e) => {
     try {
@@ -76,7 +76,7 @@ const Signup = () => {
   const jwtToken = Cookies.get('jwt_token');
 
   if (jwtToken) {
-    return <Navigate to="/expenses" />;
+    return <Navigate to="/home" />;
   }
 
   const isValid = email && username && password

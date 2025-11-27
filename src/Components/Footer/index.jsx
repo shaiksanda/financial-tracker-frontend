@@ -1,26 +1,28 @@
-import { House, LayoutDashboard, History } from "lucide-react"
+import { House, ChartSpline, ChartNoAxesCombined } from "lucide-react"
 import { Link } from "react-router-dom"
+import AddDeliveryForm from "../AddDeliveryForm";
 import "./index.css"
 
 const Footer = () => {
     return (
         <footer>
-            <Link to="/expenses" className="link-item">
+            <Link to="/home" className="link-item">
                 <div className="footer-item">
                     <House size={18} />
                     <h2 className="footer-text">Home</h2>
                 </div>
             </Link>
-            <Link className="link-item" to="/dashboard">
+            <AddDeliveryForm />
+            <Link className="link-item" to="/delivery-tracker">
                 <div className="footer-item">
-                    <LayoutDashboard size={18} />
-                    <h2 className="footer-text">Dashboard</h2>
+                    <ChartSpline size={18} />
+                    <h2 className="nav-text">Tracker</h2>
                 </div>
             </Link>
-            <Link to="/history" className="link-item">
+            <Link className="link-item" to="/delivery-analytics">
                 <div className="footer-item">
-                    <History size={18} />
-                    <h2 className="footer-text">History</h2>
+                    <ChartNoAxesCombined size={18} />
+                    <h2 className="nav-text">Analytics</h2>
                 </div>
             </Link>
         </footer>

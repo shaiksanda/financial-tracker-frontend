@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie";
-import { Link, useNavigate,Navigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import 'remixicon/fonts/remixicon.css';
 import { stagedTimers } from "../../fetchData";
 import "./index.css"
@@ -13,7 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
- 
+
 
   const [loginUser, { isLoading, isFetching }] = useLoginUserMutation()
 
@@ -44,7 +44,7 @@ const Login = () => {
       avatar: data?.userDetails?.avatar
     }));
     toast.success(data.message)
-    navigate("/expenses")
+    navigate("/home")
   }
 
   const handleSubmit = async (e) => {
@@ -75,13 +75,17 @@ const Login = () => {
   const jwtToken = Cookies.get('jwt_token');
 
   if (jwtToken) {
-    return <Navigate to="/expenses" />;
+    return <Navigate to="/home" />;
   }
 
   const isValid = username && password
   return (
     <div className="grid-container">
 
+
+      <div className="img-container">
+        <img src="https://res.cloudinary.com/dq4yjeejc/image/upload/v1727266763/4957136_ym8bwt.jpg" alt="" />
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
           <input
@@ -123,9 +127,6 @@ const Login = () => {
         <Link to="/signup" className="link">Not Yet Signup? Sign up Here</Link>
 
       </form>
-      <div className="img-container">
-        <img src="https://res.cloudinary.com/dq4yjeejc/image/upload/v1727266763/4957136_ym8bwt.jpg" alt="" />
-      </div>
     </div>
   )
 }

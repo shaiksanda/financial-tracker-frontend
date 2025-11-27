@@ -106,9 +106,16 @@ export const api = createApi({
                 method:"DELETE"
             }),
             invalidatesTags:['tracker']
+        }),
+        getTodayPerformance:builder.query({
+            query:()=>({
+                url:"/delivery/today-progress",
+                method:"GET"
+            })
+            ,providesTags:['tracker']
         })
 
     })
 })
 
-export const { useSignupUserMutation, useLoginUserMutation, useGetExpensesQuery, useAddExpenseMutation, useDeleteExpenseMutation, useGetUserProfileQuery, useEditUserProfileMutation,useLogoutUserMutation,useDeleteAccountMutation,useAddDeliveryRecordMutation,useDeliveryDataQuery,useDeleteTripMutation } = api
+export const { useSignupUserMutation, useLoginUserMutation, useGetExpensesQuery, useAddExpenseMutation, useDeleteExpenseMutation, useGetUserProfileQuery, useEditUserProfileMutation,useLogoutUserMutation,useDeleteAccountMutation,useAddDeliveryRecordMutation,useDeliveryDataQuery,useDeleteTripMutation,useGetTodayPerformanceQuery } = api
