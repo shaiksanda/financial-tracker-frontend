@@ -2,8 +2,29 @@
     display: block;
 }
 
+.icon-heading{
+    font-size: 12px;
+    display: flex;
+    gap:6px;
+    align-items: center;
+}
+
+.expense{
+    color:red
+}
+
+.income{
+    color: green;
+}
+.savings{
+    color: orange;
+}
+
 @media screen and (min-width:768px){
     .menu-item{
         display: none;
+    }
+    .icon-heading{
+        font-size: 20px;
     }
 }

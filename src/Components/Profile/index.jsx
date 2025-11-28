@@ -1,12 +1,12 @@
 import MainHeader from "../MainHeader"
 import Skeleton from "@mui/material/Skeleton";
 import Sidebar from "../Sidebar"
-import { Pencil, Trash, LogOut, Mail } from "lucide-react"
+import { Pencil, Trash } from "lucide-react"
 import "./index.css"
 import { toast } from "react-toastify"
-import { useDeleteAccountMutation, useEditUserProfileMutation, useGetUserProfileQuery, useLogoutUserMutation } from "../../services/api"
+import { useDeleteAccountMutation, useEditUserProfileMutation, useGetUserProfileQuery } from "../../services/api"
 import Popup from "reactjs-popup"
-import Cookies from "js-cookie"
+
 import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import PacmanLoader from "react-spinners/PacmanLoader";
@@ -28,9 +28,9 @@ const Profile = () => {
   const { data, isLoading, isFetching } = useGetUserProfileQuery()
   const [editUserProfile, { isLoading: editLoading }] = useEditUserProfileMutation()
   const [deleteAccount] = useDeleteAccountMutation()
-  const [logoutUser] = useLogoutUserMutation()
   const user = data?.user
   const finance = data?.finance
+  const delivery = data?.delivery
 
 
 
@@ -56,21 +56,7 @@ const Profile = () => {
   };
   const navigate = useNavigate()
 
-  const handleLogout = async (close) => {
-    try {
-      await logoutUser()
-      toast.success("Logged Out Successfully!")
-      localStorage.removeItem("user")
-      Cookies.remove("jwt_token")
-      navigate("/");
-    }
-    catch (error) {
-      toast.error(error?.date?.messge)
-    }
-    finally {
-      close()
-    }
-  }
+
 
   const handleDeleteAccount = async (id, close) => {
     try {
@@ -108,30 +94,60 @@ const Profile = () => {
       <main className="main">
         {(isLoading || isFetching) ? (<div>
           <h2 className="wait-msg">Please wait… loading your data.</h2>
-          <div className="grid-expense-container">
-            {skeletons}
-          </div>
+          <div className="loader-container"><PacmanLoader color="green" /> </div>
         </div>) : (
-          <div className="profile-layout">
+          <div>
             <section>
-              <article className="flex-container">
-                <h2>Username: </h2>
-                <h2>{user?.username.toUpperCase()}</h2>
+              <article>
+                <h2 className="heading">Username: {user?.username.toUpperCase()}</h2>
               </article>
-              <article className="flex-container">
-                <Mail />
-                <h4>{user?.email}</h4>
+              <article>
+                <h4 className="heading email">Email: {user?.email}</h4>
               </article>
-              <article className="flex-container">
-                <h3>My Debut:</h3>
-                <h3>{new Date(user?.createdAt).toDateString()}</h3>
+              <article>
+                <h3 className="heading">My Debut:{new Date(user?.createdAt).toDateString()}</h3>
               </article>
-              <article className="flex-container">
-                <h4>Your ID: </h4>
-                <h4>{user?.userId}</h4>
+              <article>
+
+                <h4 className="heading">Id: {user?.userId}</h4>
               </article>
             </section>
-            <section>
+            <h2 className="expense-heading">Finance Summary</h2>
+            <section className="cards">
+              <article className="card">
+                <h2>Total Expenses:{finance?.totalExpenses}/-</h2>
+              </article>
+              <article className="card">
+                <h3>Total Income: {finance?.totalIncome}/-</h3>
+              </article>
+              <article className="card">
+
+                <h3>Total Savings: {finance?.totalSavings}/-</h3>
+              </article>
+
+            </section>
+            <h2 className="expense-heading">Delivery Summary</h2>
+            <section className="cards">
+              <article className="card">
+
+                <h2>Total Trips: {delivery?.totalTrips}/-</h2>
+              </article>
+              <article className="card">
+
+                <h3>Total Distance Travelled: {delivery?.totalKms}Km/-</h3>
+              </article>
+              <article className="card">
+
+                <h3>Total Earnings: {delivery?.totalEarnings}/-</h3>
+              </article>
+              <article className="card">
+
+                <h3>Total Petrol Cost{delivery?.totalPetrolCost}/-</h3>
+              </article>
+
+
+            </section>
+            <section className="btns">
               <Popup
                 contentStyle={{
                   backgroundColor: 'transparent',
@@ -140,10 +156,10 @@ const Profile = () => {
                   width: '90%',
                   maxWidth: '400px',
                 }}
-                modal trigger={<article className="flex-container">
-                  <Pencil />
-                  <h2>Edit Profile</h2>
-                </article>}>
+                modal trigger={
+                  <button className="button edit-btn"><Pencil />
+                    Edit Profile</button>
+                }>
                 {(close) => (
                   <form onSubmit={(e) => handleSubmit(e, close)} className="popup">
                     <h2 style={{ textAlign: 'center' }}>Update Profile</h2>
@@ -174,10 +190,10 @@ const Profile = () => {
                   borderRadius: '12px',
                   width: '90%',
                   maxWidth: '400px',
-                }} modal trigger={<article className="flex-container">
-                  <Trash />
-                  <h2>Delete Account</h2>
-                </article>}>
+                }} modal trigger={
+                  <button className="button delete-account-btn"><Trash />
+                    Delete Account</button>
+                }>
                 {(close) => (
                   <div className="popup">
                     <h2>Are you sure you want to Delete Account? This action cannot be undone.</h2>
@@ -188,44 +204,7 @@ const Profile = () => {
                   </div>
                 )}
               </Popup>
-              <Popup
-                contentStyle={{
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  borderRadius: '12px',
-                  width: '90%',
-                  maxWidth: '400px',
-                }} modal trigger={<article className="flex-container">
-                  <LogOut />
-                  <h2>Logout</h2>
-                </article>}>
-                {(close) => (
-                  <div className="popup">
-                    <h2>Are you sure you want to Logout? This action cannot be undone.</h2>
-                    <div className="btns">
-                      <button onClick={() => handleLogout(close)} className="btn confirm-btn">Confirm</button>
-                      <button onClick={close} className="btn cancel-btn">Cancel</button>
-                    </div>
-                  </div>
-                )}
-              </Popup>
-            </section>
-            <section>
-              <article className="flex-container">
-                <h2>Total Expenses</h2>
-                <h2>{finance?.expenses}/-</h2>
-              </article>
-              <article className="flex-container">
-                <h3>Income</h3>
-                <h3>{finance?.income}/-</h3>
-              </article>
-              <article className="flex-container">
-                <h3>Total Savings</h3>
-                <h3>{finance?.savings}/-</h3>
-              </article>
-              <article className="flex-container">
-                <h3>Top Spending: {finance?.topCategory?.total}/-, Category: {finance?.topCategory?.category}</h3>
-              </article>
+
             </section>
           </div>
         )}

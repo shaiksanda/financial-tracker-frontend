@@ -12,6 +12,7 @@ export const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
   z-index: 100;
+  background-color: lightgrey;
 
 
   @media (min-width: 768px){

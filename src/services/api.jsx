@@ -113,9 +113,16 @@ export const api = createApi({
                 method:"GET"
             })
             ,providesTags:['tracker']
+        }),
+        getHeaderSummary:builder.query({
+            query:()=>({
+                url:"/expense/header-summary",
+                method:"GET"
+            }),
+            providesTags:['tracker']
         })
 
     })
 })
 
-export const { useSignupUserMutation, useLoginUserMutation, useGetExpensesQuery, useAddExpenseMutation, useDeleteExpenseMutation, useGetUserProfileQuery, useEditUserProfileMutation,useLogoutUserMutation,useDeleteAccountMutation,useAddDeliveryRecordMutation,useDeliveryDataQuery,useDeleteTripMutation,useGetTodayPerformanceQuery } = api
+export const { useGetHeaderSummaryQuery,useSignupUserMutation, useLoginUserMutation, useGetExpensesQuery, useAddExpenseMutation, useDeleteExpenseMutation, useGetUserProfileQuery, useEditUserProfileMutation,useLogoutUserMutation,useDeleteAccountMutation,useAddDeliveryRecordMutation,useDeliveryDataQuery,useDeleteTripMutation,useGetTodayPerformanceQuery } = api

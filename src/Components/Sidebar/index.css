@@ -30,18 +30,16 @@
 
 .sidebar {
     display: none;
-    margin-top: 62px;
-    height: 100vh;
-    box-shadow: 0px 0px 1px black;
+    top: 62px;
+    bottom:0;
+    left:0;
+    box-shadow: 0px 0px 1px white;
     width: 220px;
     position: fixed;
-    left: 0;
-    top: 0;
     overflow-y: auto;
     scrollbar-width: none;
     padding: 10px;
     background-color: aliceblue;
-
 }
 
 .expense-button{
