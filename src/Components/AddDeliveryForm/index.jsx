@@ -9,7 +9,8 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
 const AddDeliveryForm = () => {
-    const [formData, setFormData] = useState({ date: "", timeTaken: "", dropLocation: "", distance: '', earnings: "", status: "", notes: "", customerName: "" })
+    const today = new Date().toISOString().split("T")[0];
+    const [formData, setFormData] = useState({ date:today, timeTaken: "", dropLocation: "", distance: '', earnings: "", status: "completed", notes: "", customerName: "" })
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -87,7 +88,7 @@ const AddDeliveryForm = () => {
                         <input name="date" value={formData.date}
                             onChange={handleChange} required id="date" type="date" className="input-element" />
 
-                        <select name="status" value={formData.staus}
+                        <select name="status" value={formData.status}
                             onChange={handleChange} className="input-element">
                             <option value="">Select Status</option>
                             <option value="completed">Completed</option>

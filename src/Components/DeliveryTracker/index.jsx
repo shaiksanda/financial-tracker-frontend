@@ -8,7 +8,7 @@ import Skeleton from "@mui/material/Skeleton";
 import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { useDeleteTripMutation, useDeliveryDataQuery } from "../../services/api";
+import { useDeleteTripMutation, useDeliveryDataQuery, useUpdateTripMutation } from "../../services/api";
 const skeletons = [];
 
 for (let i = 0; i < 3; i++) {
@@ -36,8 +36,18 @@ const DeliveryTracker = () => {
 
   const [sortByDistance, setSortByDistance] = useState("")
   const [distanceOrder, setDistanceOrder] = useState("")
+  const [updateTrip,{isLoading:updateLoading,isFetching:updateFetching}] = useUpdateTripMutation();
 
   const { data, isLoading, isFetching, isError, error } = useDeliveryDataQuery({ sortByDistance, distanceOrder, sortByTimeTaken, timeTakenOrder, sortByEarnings, earningsOrder, sortByDate, dateOrder, date, days, status })
+  const [formData, setFormData] = useState({ customerName: "", dropLocation: "", earnings: "", distance: "", timeTaken: "", notes: "" })
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
 
   useEffect(() => {
     if (isLoading || isFetching) stagedTimers.start();
@@ -122,7 +132,7 @@ const DeliveryTracker = () => {
     setDate("")
     setDays("")
   }
-  const filteredDeliveryData = data?.filter((item) => item.dropLocation?.toLowerCase().includes(search.toLowerCase()) || item.customerName?.toLowerCase().includes(search.toLowerCase()))
+  const filteredDeliveryData = data?.deliveryRecords?.filter((item) => item.dropLocation?.toLowerCase().includes(search.toLowerCase()) || item.customerName?.toLowerCase().includes(search.toLowerCase()))
   const noFilteredData = !isLoading && !isFetching && (filteredDeliveryData?.length === 0);
 
 
@@ -168,7 +178,7 @@ const DeliveryTracker = () => {
 
                   <select onChange={handleEarnings} value={sortByEarnings} className="input-element">
                     <option value="" hidden>Pick A Sort Option</option>
-                    <option value="amount">Earnings</option>
+                    <option value="earnings">Earnings</option>
                   </select>
 
                   {sortByEarnings && <select onChange={(e) => handleEarningsOrder(e)} value={earningsOrder} className="input-element">
@@ -260,8 +270,29 @@ const DeliveryTracker = () => {
           </div>
 
         </div>
-        <h2 className="total-records">Total Trips <Bike />: {filteredDeliveryData?.length || 0}</h2>
+        {(!isLoading || !isFetching) && <div className="progress-container">
+          <div className="flex-container">
 
+            {/* <Motorbike size={24} /> */}
+            <h2>Trips: {data?.totalTrips}/-</h2>
+          </div>
+          <div className="flex-container">
+
+            {/* <Route size={24} /> */}
+            <h2>Total Kms:{data?.totalKms}kms/-</h2>
+          </div>
+          <div className="flex-container">
+
+            {/* <IndianRupee size={24} /> */}
+            <h2>Earnings: {data?.totalEarnings}/-</h2>
+          </div>
+          <div className="flex-container">
+
+            {/* <Fuel size={24} /> */}
+            <h2>Petrol Cost: {data?.totalPetrolCost}/-</h2>
+          </div>
+        </div>
+        }
 
         {(noFilteredData) && (
           <h2 className="wait-msg">No Trips match your filters. Try adjusting them.</h2>
@@ -282,24 +313,87 @@ const DeliveryTracker = () => {
               <h4>Date: <span className="highlight">{new Date(each.date).toDateString()}</span></h4>
               <h4>Status: <span className="highlight">{each.status}</span></h4>
               {each.notes && <h4>Notes: <span className="highlight">{each.notes}</span></h4>}
-              <Popup
-                contentStyle={{
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  borderRadius: '12px',
-                  width: '90%',
-                  maxWidth: '400px',
-                }} modal trigger={<button className="button delete-button">Delete</button>}>
-                {(close) => (
-                  <div className="sort-container">
-                    <h2>Are you sure you want to Delete? This action cannot be undone.</h2>
-                    <div className="btns">
-                      <button onClick={() => handleDelete(each._id, close)} className="btn confirm-btn">Confirm</button>
-                      <button onClick={close} className="btn cancel-btn">Cancel</button>
+              <div className="btns">
+                <Popup
+                  contentStyle={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    borderRadius: '12px',
+                    width: '90%',
+                    maxWidth: '400px',
+                  }} modal trigger={<button className="button delete-button">Delete</button>}>
+                  {(close) => (
+                    <div className="sort-container">
+                      <h2>Are you sure you want to Delete? This action cannot be undone.</h2>
+                      <div className="btns">
+                        <button onClick={() => handleDelete(each._id, close)} className="btn confirm-btn">Confirm</button>
+                        <button onClick={close} className="btn cancel-btn">Cancel</button>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </Popup>
+                  )}
+                </Popup>
+                <Popup onOpen={() => setFormData({
+                  customerName: each.customerName,
+                  dropLocation: each.dropLocation,
+                  earnings: each.earnings,
+                  distance: each.distance,
+                  timeTaken: each.timeTaken,
+                  notes: each.notes || ""
+                })}
+                  contentStyle={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    borderRadius: '12px',
+                    width: '90%',
+                    maxWidth: '400px',
+                  }} modal trigger={<button  className="button update-btn">Update</button>}>
+                  {(close) => (
+                    <form onSubmit={async (e) => {
+                      e.preventDefault();
+                      try {
+                        await updateTrip({ id: each._id, data: formData }).unwrap();
+                        toast.success("Trip updated successfully!");
+                        close(); // closes popup after success
+                      } catch (err) {
+                        toast.error(err?.data?.message || "Update failed!");
+                      }
+                    }} className="sort-container">
+                      <div className="input-wrapper">
+                        <input value={formData.customerName}
+                          onChange={handleChange} name="customerName" id="customerName" type="text" required className="input-element" />
+                        <label htmlFor="customerName" className="label">Customer Name</label>
+                      </div>
+                      <div className="input-wrapper">
+                        <input onChange={handleChange} value={formData.dropLocation} name="dropLocation" id="dropLocation" type="text" className="input-element" required />
+                        <label htmlFor="dropLocation" className="label">Drop Location</label>
+                      </div>
+                      <div className="input-wrapper">
+                        <input onChange={handleChange} value={formData.earnings} required name="earnings" id="earnings" className="input-element" type="number" />
+                        <label className="label" htmlFor="earnings">Earnings</label>
+                      </div>
+                      <div className="input-wrapper">
+                        <input onChange={handleChange} value={formData.distance} required name="distance" id="distance" className="input-element" type="number" />
+                        <label className="label" htmlFor="distance">Distance</label>
+                      </div>
+                      <div className="input-wrapper">
+                        <input onChange={handleChange} value={formData.timeTaken} required name="timeTaken" id="timeTaken" className="input-element" type="number" />
+                        <label className="label" htmlFor="timeTaken">Time Taken</label>
+                      </div>
+                      <div className="input-wrapper">
+                        <input value={formData.notes}
+                          onChange={handleChange} name="notes" id="notes" type="text" required className="input-element" />
+                        <label htmlFor="notes" className="label">Notes</label>
+                      </div>
+
+                      <div className="btns">
+                        <button disabled={updateLoading || updateFetching} type="submit" className="button update-btn">{updateLoading?"Processing...":"Update"}</button>
+                        <button className="button" onClick={close}>Close</button>
+                      </div>
+
+                    </form>
+                  )}
+                </Popup>
+              </div>
             </div>
           ))}
         </div>)}

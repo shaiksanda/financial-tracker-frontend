@@ -30,7 +30,7 @@ const History = () => {
   const [dateOrder, setDateOrder] = useState("")
   const [sortByAmount, setSortByAmount] = useState("")
   const [amountOrder, setAmountOrder] = useState("")
-  const { data, isLoading: expenseLoading, isFetching,isError,error } = useGetExpensesQuery({ sortByDate, dateOrder, sortByAmount, amountOrder, type, category, date, days })
+  const { data, isLoading: expenseLoading, isFetching, isError, error } = useGetExpensesQuery({ sortByDate, dateOrder, sortByAmount, amountOrder, type, category, date, days })
   const [deleteExpense] = useDeleteExpenseMutation()
   const { expenses } = data || []
   const handleSearch = (e) => {
@@ -90,7 +90,7 @@ const History = () => {
   }
   const filteredExpenses = expenses?.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()) || item.category.toLowerCase().includes(search.toLowerCase()))
 
-  
+
   const noFilteredData = !expenseLoading && !isFetching && (filteredExpenses?.length === 0);
 
   return (
@@ -224,7 +224,14 @@ const History = () => {
           </div>
 
         </div>
-        <h2 className="total-records">Total Records: {filteredExpenses?.length || 0}</h2>
+        {(!expenseLoading || !isFetching) && (
+          <div className="progress-container">
+            <h2 className="expense-heading">Total Records: {data?.count}</h2>
+            <h2 className="expense">Total Expenses: {data?.totalExpenses}/-</h2>
+            <h2 className="income">Total Income: {data?.totalIncome}/-</h2>
+            <h2 className="savings">Total Savings: {data?.totalSavings}</h2>
+          </div>
+        )}
 
         {isError && (
           <h2 className="wait-msg">{error?.data?.message} Add your first record.</h2>
@@ -239,11 +246,11 @@ const History = () => {
           {(expenseLoading || isFetching) ? (skeletons
           ) : (filteredExpenses?.map((each) => (
             <div className="each-expense-item" key={each._id}>
-              <h2>Title : <span className="highlight">{each.title}</span></h2>
-              <h2>Amount : <span className="highlight">{each.amount}</span></h2>
-              <h2>Category : <span className="highlight">{each.category}</span></h2>
-              <h2>Type : <span className="highlight">{each.type}</span></h2>
-              <h2>Date : <span className="highlight">{new Date(each.date).toDateString()}</span></h2>
+              <h4>Title : <span className="highlight">{each.title}</span></h4>
+              <h4>Amount : <span className="highlight">{each.amount}</span></h4>
+              <h4>Category : <span className="highlight">{each.category}</span></h4>
+              <h4>Type : <span className="highlight">{each.type}</span></h4>
+              <h4>Date : <span className="highlight">{new Date(each.date).toDateString()}</span></h4>
               <div className="btns">
                 <Popup
                   contentStyle={{

@@ -1,0 +1,13 @@
+
+
+.update-btn{
+    background-color: orange;
+    color:white;
+    width: 120px;
+    cursor: pointer;
+}
+
+.update-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

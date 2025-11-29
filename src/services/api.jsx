@@ -107,6 +107,15 @@ export const api = createApi({
             }),
             invalidatesTags:['tracker']
         }),
+        updateTrip:builder.mutation({
+            query:({id,data})=>({
+                url:`/delivery/update/${id}`,
+                body:data,
+                method:"PUT"
+            }),
+            invalidatesTags:['tracker']
+        })
+        ,
         getTodayPerformance:builder.query({
             query:()=>({
                 url:"/delivery/today-progress",
@@ -125,4 +134,4 @@ export const api = createApi({
     })
 })
 
-export const { useGetHeaderSummaryQuery,useSignupUserMutation, useLoginUserMutation, useGetExpensesQuery, useAddExpenseMutation, useDeleteExpenseMutation, useGetUserProfileQuery, useEditUserProfileMutation,useLogoutUserMutation,useDeleteAccountMutation,useAddDeliveryRecordMutation,useDeliveryDataQuery,useDeleteTripMutation,useGetTodayPerformanceQuery } = api
+export const { useUpdateTripMutation,useGetHeaderSummaryQuery,useSignupUserMutation, useLoginUserMutation, useGetExpensesQuery, useAddExpenseMutation, useDeleteExpenseMutation, useGetUserProfileQuery, useEditUserProfileMutation,useLogoutUserMutation,useDeleteAccountMutation,useAddDeliveryRecordMutation,useDeliveryDataQuery,useDeleteTripMutation,useGetTodayPerformanceQuery } = api
