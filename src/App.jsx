@@ -4,7 +4,7 @@ import Login from "./Components/Login"
 import Home from "./Components/Home"
 import Singup from "./Components/Signup"
 import Dashboard from "./Components/Dashboard"
-import History  from "./Components/History"
+import History from "./Components/History"
 import DeliveryTracker from "./Components/DeliveryTracker"
 import DeliveryAnalytics from "./Components/DeliveryAnalytics"
 import ProductTour from "./Components/ProductTour"
@@ -22,7 +22,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Singup />} />
-        <Route path="/home" element={<MainHomePage />} />
+        <Route path="/home" element={<ProtectedRoute element={<MainHomePage />} />} />
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
         <Route path="/history" element={<ProtectedRoute element={<History />} />} />
         <Route path="/delivery-tracker" element={<ProtectedRoute element={<DeliveryTracker />} />} />
