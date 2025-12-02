@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <Main>
+      <Main className="lock-home">
         <div className="grid-container home-top-container">
           <div className="grid-container images">
             <img src="https://res.cloudinary.com/dq4yjeejc/image/upload/v1760348126/budget_img_vvi5xt.webp" alt="image" />
