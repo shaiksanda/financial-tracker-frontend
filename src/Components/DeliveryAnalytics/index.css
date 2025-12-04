@@ -1,0 +1,21 @@
+.chart-card {
+  background: lavender;
+  padding: 20px;
+  margin: 25px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+
+.analytics{
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    grid-gap: 10px;
+}
+
+/* @media screen and (min-width:768px){
+    .analytics{
+        grid-template-columns: repeat(2,1fr);
+    }
+} */

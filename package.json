@@ -14,9 +14,11 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.5",
     "@reduxjs/toolkit": "^2.10.1",
+    "apexcharts": "^5.3.6",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.553.0",
     "react": "^19.1.1",
+    "react-apexcharts": "^1.9.0",
     "react-dom": "^19.1.1",
     "react-redux": "^9.2.0",
     "react-responsive": "^10.0.1",
@@ -25,8 +27,7 @@
     "react-toastify": "^11.0.5",
     "reactjs-popup": "^2.0.6",
     "remixicon": "^4.7.0",
-    "styled-components": "^6.1.19",
-    "sweetalert2": "^11.26.3"
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

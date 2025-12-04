@@ -129,9 +129,17 @@ export const api = createApi({
                 method:"GET"
             }),
             providesTags:['tracker']
+        }),
+        getDeliveryAnalytics:builder.query({
+            query:()=>({
+                url:"/delivery/analytics",
+                method:"GET"
+            }),
+            providesTags:['tracker']
+
         })
 
     })
 })
 
-export const { useUpdateTripMutation,useGetHeaderSummaryQuery,useSignupUserMutation, useLoginUserMutation, useGetExpensesQuery, useAddExpenseMutation, useDeleteExpenseMutation, useGetUserProfileQuery, useEditUserProfileMutation,useLogoutUserMutation,useDeleteAccountMutation,useAddDeliveryRecordMutation,useDeliveryDataQuery,useDeleteTripMutation,useGetTodayPerformanceQuery } = api
+export const { useGetDeliveryAnalyticsQuery,useUpdateTripMutation,useGetHeaderSummaryQuery,useSignupUserMutation, useLoginUserMutation, useGetExpensesQuery, useAddExpenseMutation, useDeleteExpenseMutation, useGetUserProfileQuery, useEditUserProfileMutation,useLogoutUserMutation,useDeleteAccountMutation,useAddDeliveryRecordMutation,useDeliveryDataQuery,useDeleteTripMutation,useGetTodayPerformanceQuery } = api
