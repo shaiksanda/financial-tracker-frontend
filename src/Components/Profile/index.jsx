@@ -4,7 +4,7 @@ import Sidebar from "../Sidebar"
 import { Pencil, Trash } from "lucide-react"
 import "./index.css"
 import { toast } from "react-toastify"
-import { useDeleteAccountMutation, useEditUserProfileMutation, useGetUserProfileQuery } from "../../services/api"
+import { useDeleteAccountMutation, useEditUserProfileMutation, useGetUserProfileQuery } from "../../services/userApi"
 import Popup from "reactjs-popup"
 
 import { useNavigate } from "react-router-dom"

@@ -3,7 +3,7 @@ import { toast } from "react-toastify"
 import { LogOut } from "lucide-react"
 import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom"
-import { useLogoutUserMutation } from "../../services/api"
+import { useLogoutUserMutation } from "../../services/authApi"
 const Logout = () => {
     const [logoutUser]=useLogoutUserMutation()
     const navigate=useNavigate()

@@ -1,16 +1,23 @@
 import MainHeader from "../MainHeader";
 import Sidebar from "../Sidebar";
 import Chart from "react-apexcharts";
-import { useGetDeliveryAnalyticsQuery } from "../../services/api";
-import { useMediaQuery } from "react-responsive"
+import { useGetDeliveryAnalyticsQuery } from "../../services/deliveryApi";
+import { useState } from "react";
 import "./index.css";
+import Footer from "../Footer";
+import { RingLoader } from "react-spinners";
 
 const DeliveryAnalytics = () => {
-  const { data } = useGetDeliveryAnalyticsQuery({ days: 5 });
-  const chartData = data?.analytics || [];
-  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const [n, setN] = useState("7")
+  const { data, isLoading, isFetching,isError,error } =
+    useGetDeliveryAnalyticsQuery({ days: Number(n) }, {
+      refetchOnMountOrArgChange: true,
+    });
 
-  // ---- CHART 1: Total Trips ----
+  const chartData = data?.analytics || [];
+  console.log("N =", n);
+  console.log("API Days =", data?.analytics?.length);
+
 
   // ---- CHART 1: Total Trips (Clean Area) ----
   const tripsOptions = {
@@ -71,7 +78,6 @@ const DeliveryAnalytics = () => {
     { name: "Earnings", data: chartData.map(i => i.totalEarnings) }
   ];
 
-  // ---- CHART 3: Distance Covered ----
   // ---- CHART 3: Distance Covered (Area + Line Combo) ----
   const distanceOptions = {
     chart: {
@@ -115,13 +121,6 @@ const DeliveryAnalytics = () => {
     },
 
   ];
-
-
-  // ---- CHART 4: Delivery Time ----
-
-
-
-
   // ---- CHART 4: Delivery Time (Area) ----
   const timeOptions = {
     chart: { toolbar: { show: false } },
@@ -152,8 +151,6 @@ const DeliveryAnalytics = () => {
   const timeSeries = [
     { name: "Delivery Time", data: chartData.map(i => i.totalTimeTaken) }
   ];
-
-
 
   // ---- CHART 5: Petrol Cost (Area) ----
   const petrolOptions = {
@@ -196,28 +193,39 @@ const DeliveryAnalytics = () => {
       <MainHeader />
       <Sidebar />
       <main className="main analytics">
+        <select className="input-element dropdown" value={n} onChange={(e) => setN(e.target.value)}>
+          <option value="7">Last 7 days</option>
+          <option value="30">Last 30 Days</option>
+          <option value="90">Last 90 Days</option>
+          <option value="180">Last 180 Days</option>
+          <option value="365">Last 365 Days</option>
+        </select>
+        {isError ? (<h2 className="wait-msg">{error?.data?.message}</h2>) : ((isLoading || isFetching) ? (<div className="dashboard-container"><h2 className="wait-msg">Please wait… loading your data.</h2><RingLoader color="red" /></div>) : (
+          <>
+            <div className="chart-card">
+              <Chart options={tripsOptions} series={tripsSeries} type="area" height={350} />
+            </div>
 
-        <div className="chart-card">
-          <Chart options={tripsOptions} series={tripsSeries} type="area" height={350} />
-        </div>
+            <div className="chart-card">
+              <Chart options={earningsOptions} series={earningsSeries} type="area" height={350} />
+            </div>
 
-        <div className="chart-card">
-          <Chart options={earningsOptions} series={earningsSeries} type="area" height={350} />
-        </div>
+            <div className="chart-card">
+              <Chart options={distanceOptions} series={distanceSeries} type="line" height={350} />
+            </div>
 
-        <div className="chart-card">
-          <Chart options={distanceOptions} series={distanceSeries} type="line" height={350} />
-        </div>
+            <div className="chart-card">
+              <Chart options={timeOptions} series={timeSeries} type="area" height={350} />
+            </div>
 
-        <div className="chart-card">
-          <Chart options={timeOptions} series={timeSeries} type="area" height={350} />
-        </div>
-
-        <div className="chart-card">
-          <Chart options={petrolOptions} series={petrolSeries} type="area" height={350} />
-        </div>
+            <div className="chart-card">
+              <Chart options={petrolOptions} series={petrolSeries} type="area" height={350} />
+            </div>
+          </>
+        ))}
 
       </main>
+      <Footer />
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import { LogoImg, HeaderContainer } from "../../styles"
 import { Link } from "react-router-dom"
-import { Menu, BanknoteArrowDown, BanknoteArrowUp, HandCoins, Heading1 } from "lucide-react"
+import { Menu, BanknoteArrowDown, BanknoteArrowUp, HandCoins,  } from "lucide-react"
 import SideMenu from "../SideMenu"
 import { useState } from "react"
-import { useGetHeaderSummaryQuery } from "../../services/api"
+import { useGetHeaderSummaryQuery } from "../../services/expenseApi"
 import "./index.css"
 import PacmanLoader from "react-spinners/PacmanLoader";
 

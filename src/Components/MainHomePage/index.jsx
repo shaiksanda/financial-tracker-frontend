@@ -7,7 +7,7 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { toast } from "react-toastify";
 //import { Motorbike,Route,IndianRupee,Fuel } from "lucide-react"
-import { useGetTodayPerformanceQuery, useDeleteTripMutation, useUpdateTripMutation } from "../../services/api"
+import { useGetTodayPerformanceQuery, useDeleteTripMutation, useUpdateTripMutation } from "../../services/deliveryApi"
 import { PacmanLoader } from "react-spinners";
 import { stagedTimers } from "../../fetchData";
 

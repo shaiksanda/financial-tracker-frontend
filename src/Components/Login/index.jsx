@@ -4,7 +4,7 @@ import { Link, useNavigate, Navigate } from "react-router-dom";
 import 'remixicon/fonts/remixicon.css';
 import { stagedTimers } from "../../fetchData";
 import "./index.css"
-import { useLoginUserMutation } from "../../services/api";
+import { useLoginUserMutation } from "../../services/authApi";
 import { toast } from "react-toastify";
 import PacmanLoader from "react-spinners/PacmanLoader";
 

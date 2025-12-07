@@ -8,7 +8,7 @@ import Skeleton from "@mui/material/Skeleton";
 import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { useDeleteTripMutation, useDeliveryDataQuery, useUpdateTripMutation } from "../../services/api";
+import { useDeleteTripMutation, useDeliveryDataQuery, useUpdateTripMutation } from "../../services/deliveryApi";
 const skeletons = [];
 
 for (let i = 0; i < 3; i++) {

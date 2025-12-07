@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 import { BookmarkPlus } from "lucide-react";
 import { useState } from "react";
-import { useAddExpenseMutation } from "../../services/api";
+import { useAddExpenseMutation } from "../../services/expenseApi";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 

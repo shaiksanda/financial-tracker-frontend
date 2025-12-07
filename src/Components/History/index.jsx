@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Funnel, ArrowUpDown, ListRestart } from "lucide-react";
 import Skeleton from "@mui/material/Skeleton";
 import { toast } from "react-toastify";
-import { useDeleteExpenseMutation, useGetExpensesQuery } from "../../services/api"
+import { useDeleteExpenseMutation, useGetExpensesQuery } from "../../services/expenseApi"
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import "./index.css"
